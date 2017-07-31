@@ -2,8 +2,9 @@
 
 import argparse
 import sys
-import secrets
+import random
 import math
+import time
 
 
 #MAX_RND = 1000
@@ -11,13 +12,13 @@ import math
 
 
 def get_arguments():
-    parser = argparse.ArgumentParser(description='''A small program to
-                                     calculate Apéry's constant using 
-                                     (pseudo) random numbers.''')
-    parser.add_argument('-N', default=1000, help='''The amount of random
-                        Numbers used. Defaults to 1000.''', type=int)
-    parser.add_argument('-M', default=1000, help='''The maximum size any
-                        random number can take. Defaults to 1000''', type=int)
+    parser = argparse.ArgumentParser(description="A small program to"
+                                     +"calculate Apéry's constant using" 
+                                     +"(pseudo) random numbers.")
+    parser.add_argument('-N', default=1000, help="The amount of random"
+                        +"Numbers used. Defaults to 1000.", type=int)
+    parser.add_argument('-M', default=1000, help="The maximum size any"
+                        +"random number can take. Defaults to 1000", type=int)
     args = parser.parse_args()
     return args
 
@@ -33,9 +34,9 @@ def tuple_gcd(t):
     return gcd(a, b, c)
 
 def get_three_rnds(max_rnd):
-    a = secrets.randbelow(max_rnd)
-    b = secrets.randbelow(max_rnd)
-    c = secrets.randbelow(max_rnd)
+    a = random.randint(0, max_rnd)
+    b = random.randint(0, max_rnd)
+    c = random.randint(0, max_rnd)
     return (a, b, c)
 
 def get_rnd_list(length, max_rnd):
@@ -49,10 +50,17 @@ def main():
     coprimes = 0
     N = args.N
     M = args.M
+    time1 = time.time()
     rnd_list = get_rnd_list(N, M)
+    time2 = time.time()
+    rnd_gen_time = time2 - time1
+    print(("[+] {0} Tripletts of random numbers created in {1}"
+          +"seconds").format(N, rnd_gen_time))
     for i in rnd_list:
         if tuple_gcd(i) == 1:
             coprimes += 1
+    time3 = time.time()
+    print("[+] calculation time: {} seconds".format(time3 - time2))
     print("N: {}".format(N))
     print("Number of coprimes: {}".format(coprimes))
     print("Approximation of Apery's constant: {}".format(N/coprimes))
