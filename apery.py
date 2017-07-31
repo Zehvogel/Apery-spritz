@@ -39,28 +39,18 @@ def get_three_rnds(max_rnd):
     c = random.randint(0, max_rnd)
     return (a, b, c)
 
-def get_rnd_list(length, max_rnd):
-    rnd_list = []
-    for i in range(length):
-        rnd_list.append(get_three_rnds(max_rnd))
-    return rnd_list
-
 def main():
     args = get_arguments()
     coprimes = 0
     N = args.N
     M = args.M
     time1 = time.time()
-    rnd_list = get_rnd_list(N, M)
-    time2 = time.time()
-    rnd_gen_time = time2 - time1
-    print(("[+] {0} Tripletts of random numbers created in {1}"
-          +"seconds").format(N, rnd_gen_time))
-    for i in rnd_list:
-        if tuple_gcd(i) == 1:
+    for i in range(N):
+        triplett = get_three_rnds(M)
+        if tuple_gcd(triplett) == 1:
             coprimes += 1
-    time3 = time.time()
-    print("[+] calculation time: {} seconds".format(time3 - time2))
+    time2 = time.time()
+    print("[+] time: {} seconds".format(time2 - time1))
     print("N: {}".format(N))
     print("Number of coprimes: {}".format(coprimes))
     print("Approximation of Apery's constant: {}".format(N/coprimes))
