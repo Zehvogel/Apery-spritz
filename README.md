@@ -1,2 +1,4 @@
 # Apery-spritz
-a small python program to approximate Apéry's constant using random numbers
+a small collection of programs to approximate Apéry's constant using random numbers
+
+inspired by https://www.youtube.com/watch?v=ur-iLy4z3QE
