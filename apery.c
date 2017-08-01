@@ -6,6 +6,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <inttypes.h>
+#include <omp.h>
+#include <time.h>
+#include "pcg_basic.h"
 
 #define FAILURE(progname, msg...) \
    fprintf(stderr,msg); usage(progname); exit(EXIT_FAILURE);
@@ -35,10 +38,6 @@ int triple_gcd(int a, int b, int c) {
   return d;
 }
 
-int randbelow(uint64_t max_rnd) {
-  return rand() % (max_rnd+1);
-}
-
 int main(int argc, char *argv[]) {
   uint64_t N, M;
 
@@ -55,15 +54,17 @@ int main(int argc, char *argv[]) {
     default:
       FAILURE(argv[0], "%s\n","Illegal parameter count!");
   }
-
-  srand(3);
+  
+  pcg32_random_t rng1;
+  pcg32_srandom_r(&rng1, time(NULL), (intptr_t)&rng1);
 
   uint64_t coprimes = 0;
-
+  uint64_t a, b, c;
+/*#pragma omp parallel for private(a, b, c) reduction(+:coprimes)*/
   for (uint64_t i = 0; i < N; i++) {
-    uint64_t a = randbelow(M);
-    uint64_t b = randbelow(M);
-    uint64_t c = randbelow(M);
+    a = pcg32_boundedrand_r(&rng1, M);
+    b = pcg32_boundedrand_r(&rng1, M);
+    c = pcg32_boundedrand_r(&rng1, M);
     if (triple_gcd(a, b, c) == 1) {
       coprimes++;
     }

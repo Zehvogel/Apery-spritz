@@ -1,12 +1,12 @@
 .PHONY: all clean
 
 CC=gcc
-CFLAGS=-Wall -Werror -O3 -march=native
+CFLAGS=-Wall -Werror -O3 -march=native -fopenmp
 
 all: apery.x
 
-%.x:%.c
-	${CC} ${CFLAGS} -o $@ $<
+apery.x:pcg_basic.o apery.o
+	${CC} -o $@ $^ ${CFLAGS}
 
 clean:
 	rm -f apery.x
