@@ -1,3 +1,5 @@
+# Copyright (c) 2017 Leonhard Reichenbach
+# This file is released under the MIT license.
 .PHONY: all clean
 
 CC=gcc

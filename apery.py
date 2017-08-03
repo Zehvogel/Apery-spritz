@@ -1,5 +1,8 @@
 #/usr/bin/python3
 
+# Copyright © 2017 Leonhard Reichenbach
+# This file is released under the MIT license.
+
 import argparse
 import sys
 import random
