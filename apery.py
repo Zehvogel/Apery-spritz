@@ -15,12 +15,12 @@ import time
 
 
 def get_arguments():
-    parser = argparse.ArgumentParser(description="A small program to"
-                                     +"calculate Apéry's constant using" 
+    parser = argparse.ArgumentParser(description="A small program to "
+                                     +"calculate Apéry's constant using "
                                      +"(pseudo) random numbers.")
-    parser.add_argument('-N', default=1000, help="The amount of random"
+    parser.add_argument('-N', default=1000, help="The amount of random "
                         +"Numbers used. Defaults to 1000.", type=int)
-    parser.add_argument('-M', default=1000, help="The maximum size any"
+    parser.add_argument('-M', default=1000, help="The maximum size any "
                         +"random number can take. Defaults to 1000", type=int)
     args = parser.parse_args()
     return args
@@ -31,10 +31,6 @@ def gcd(a, b, c):
         return 1
     else:
         return math.gcd(d,c)
-
-def tuple_gcd(t):
-    a, b, c = t
-    return gcd(a, b, c)
 
 def get_three_rnds(max_rnd):
     a = random.randint(0, max_rnd)
@@ -50,7 +46,7 @@ def main():
     time1 = time.time()
     for i in range(N):
         triplett = get_three_rnds(M)
-        if tuple_gcd(triplett) == 1:
+        if gcd(*triplett) == 1:
             coprimes += 1
     time2 = time.time()
     print("[+] time: {} seconds".format(time2 - time1))
